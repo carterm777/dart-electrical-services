@@ -1,0 +1,246 @@
+/* ── Google Reviews — Stat Counter and Testimonial Combo /
+      Glass Panel Quote Card on dark ─────────────────────────────────────── */
+
+.rv { position: relative; }
+.rv::after {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: var(--hair);
+  background: var(--w-07);
+}
+
+.rv-rule { max-width: 210px; }
+.rv-eyebrow { margin-block-start: var(--s-6); }
+
+.rv-body {
+  display: grid;
+  gap: var(--s-7);
+  margin-block-start: var(--s-10);
+  align-items: stretch;
+}
+@media (min-width: 981px) {
+  .rv-body { grid-template-columns: minmax(300px, 340px) minmax(0, 1fr); gap: var(--s-8); }
+}
+
+/* ── Aggregate callout ───────────────────────────────────────────────────── */
+.rv-agg {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--s-7) var(--s-6) var(--s-6);
+  background: linear-gradient(180deg, var(--ink-800) 0%, var(--ink-950) 100%);
+  box-shadow: inset 0 0 0 var(--hair) var(--w-11), var(--el-3);
+}
+.rv-agg::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  width: 64px;
+  height: var(--rule-thick);
+  background: var(--red);
+}
+.rv-agg-top { display: flex; align-items: center; gap: var(--s-3); }
+.rv-agg-src {
+  font-size: var(--fs-micro);
+  font-weight: var(--w-semi);
+  letter-spacing: var(--tr-widest);
+  text-transform: uppercase;
+  color: var(--ink-300);
+}
+.rv-agg-num {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  margin-block-start: var(--s-5);
+  font-family: var(--font-display);
+  font-weight: var(--w-black);
+  letter-spacing: var(--tr-tightest);
+  line-height: 0.86;
+  color: var(--light);
+}
+.rv-agg-value { font-size: var(--fs-6xl); font-variant-numeric: tabular-nums; }
+.rv-agg-of { font-size: var(--fs-xl); color: var(--ink-400); font-weight: var(--w-bold); }
+
+.rv-agg-title {
+  font-size: var(--fs-3xs);
+  font-weight: var(--w-semi);
+  font-family: var(--font-body);
+  letter-spacing: var(--tr-wider);
+  text-transform: uppercase;
+  color: var(--ink-300);
+  margin-block-start: var(--s-6);
+}
+.rv-agg-line {
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--light);
+  margin-block-start: var(--s-3);
+}
+.rv-agg-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-4);
+  margin-block-start: auto;
+  padding-block-start: var(--s-5);
+  border-block-start: var(--hair) solid var(--w-11);
+}
+.rv-agg-line { margin-block-end: var(--s-7); }
+.rv-agg-meta dt {
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tr-wide);
+  text-transform: uppercase;
+  color: var(--ink-400);
+}
+.rv-agg-meta dd {
+  font-family: var(--font-display);
+  font-weight: var(--w-bold);
+  font-size: var(--fs-lg);
+  color: var(--light);
+  margin-block-start: 2px;
+  line-height: 1;
+}
+
+/* ── Stars ───────────────────────────────────────────────────────────────── */
+.rv-stars { display: inline-flex; align-items: center; gap: 3px; color: var(--g-star); }
+.rv-stars .lucide { width: 14px; height: 14px; stroke-width: 0; }
+.rv-stars--big { margin-block-start: var(--s-5); gap: var(--s-2); }
+.rv-stars--big .lucide { width: 22px; height: 22px; }
+.rv-stars[data-sweep="true"] .lucide {
+  opacity: 0;
+  transform: scale(0.7);
+  animation: rv-star-fill 320ms var(--ease-out-quart) forwards;
+  animation-delay: calc(340ms + var(--star-i) * 70ms);
+}
+@keyframes rv-star-fill {
+  to { opacity: 1; transform: none; }
+}
+
+/* ── Quote cards ─────────────────────────────────────────────────────────── */
+.rv-list {
+  display: grid;
+  gap: var(--s-5);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 700px) {
+  .rv-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* The fifth quote spans the row and is set as a pull-quote, so the grid ends
+     on a considered note rather than a half-empty row. */
+  .rv-cell:nth-child(5) { grid-column: 1 / -1; }
+  .rv-cell:nth-child(5) .rv-card { padding: var(--s-7); }
+  .rv-cell:nth-child(5) .rv-card-text {
+    font-size: var(--fs-xl);
+    line-height: 1.42;
+    letter-spacing: var(--tr-tight);
+    color: var(--light);
+    max-width: 34ch;
+  }
+  .rv-cell:nth-child(5) .rv-card-quote { width: 108px; height: 108px; }
+  .rv-cell:nth-child(5) .rv-card-foot { border-block-start: 0; padding-block-start: var(--s-6); }
+}
+.rv-cell { display: flex; }
+
+.rv-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: var(--s-6);
+  background: var(--w-04);
+  backdrop-filter: blur(14px);
+  box-shadow: inset 0 0 0 var(--hair) var(--w-11);
+  overflow: hidden;
+  transition: transform var(--hover-dur) var(--ease-out-cubic),
+              box-shadow var(--hover-dur) var(--ease-out-cubic),
+              background-color var(--hover-dur) var(--ease-out-cubic);
+}
+.rv-card:hover {
+  transform: translate3d(0, -5px, 0);
+  background: var(--w-07);
+  box-shadow: inset 0 0 0 var(--hair) var(--w-30), var(--el-3);
+}
+.rv-card-quote {
+  position: absolute;
+  inset-block-start: -8px;
+  inset-inline-end: -6px;
+  width: 74px;
+  height: 74px;
+  color: var(--w-04);
+  stroke-width: 1;
+}
+.rv-card > *:not(.rv-card-quote) { position: relative; z-index: 1; }
+
+.rv-card-top { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); }
+.rv-card-tag {
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tr-wider);
+  text-transform: uppercase;
+  color: var(--ink-400);
+}
+.rv-card-text {
+  font-size: var(--fs-sm);
+  line-height: 1.62;
+  color: var(--ink-100);
+  margin-block-start: var(--s-5);
+  flex: 1;
+}
+.rv-card-text::before { content: "\201C"; }
+.rv-card-text::after { content: "\201D"; }
+
+.rv-card-foot {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  margin-block-start: var(--s-6);
+  padding-block-start: var(--s-5);
+  border-block-start: var(--hair) solid var(--w-11);
+}
+/* Deliberately graphite, not red: this section's single red anchor is the
+   aggregate panel's rule, and five red squares would spend the budget here. */
+.rv-card-avatar {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  background: var(--ink-600);
+  color: var(--light);
+  box-shadow: inset 0 0 0 var(--hair) var(--w-18);
+  font-family: var(--font-display);
+  font-weight: var(--w-bold);
+  font-size: var(--fs-sm);
+  line-height: 1;
+  transition: background-color var(--hover-dur) var(--ease-out-cubic);
+}
+.rv-card:hover .rv-card-avatar { background: var(--red); box-shadow: none; }
+.rv-card-who { display: grid; gap: 2px; min-width: 0; }
+.rv-card-name {
+  font-size: var(--fs-xs);
+  font-weight: var(--w-semi);
+  font-style: normal;
+  color: var(--light);
+  letter-spacing: var(--tr-tight);
+}
+.rv-card-src {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--fs-micro);
+  color: var(--ink-400);
+  letter-spacing: var(--tr-wide);
+}
+
+.rv-note { margin-block-start: var(--s-8); }
+
+@media (max-width: 980px) {
+  .rv-agg { padding: var(--s-6) var(--s-5); }
+  .rv-agg-meta { margin-block-start: var(--s-5); }
+  .rv-card { padding: var(--s-5); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv-stars[data-sweep="true"] .lucide { animation: none !important; opacity: 1; transform: none; }
+  .rv-card:hover { transform: none; }
+}

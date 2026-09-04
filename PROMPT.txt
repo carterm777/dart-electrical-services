@@ -1,0 +1,131 @@
+You are building a one-page cold-outreach demo site in React. This needs to look like a genuinely premium, $10,000+ custom local-business build — luxurious, high-fidelity, restrained, not a template, not AI-generated. This is a redesign concept for a business that already has a live site at http://dartelectricalservices.ca/ — services, facts, and positioning were extracted from that page, but ALL copy below is freshly written, not reworded from the source.
+
+WORKFLOW — FOLLOW EXACTLY
+1. This project's working directory already contains a copy of the section-style-repo-animation+ folder. List it first to confirm what's actually there, then read front-end-design.md from its root exactly: build a token system first (but use the fonts/colors given below as fixed — don't re-derive a palette), avoid its named generic-AI-design defaults, watch CSS selector specificity so section-level and element-level classes don't cancel each other out, and take screenshots to self-critique against this brief before opening the preview.
+2. For EVERY section on this page, consult section-style-repo.md and its references/ subfolder (also inside that same folder) and run its full three-phase process (layout, visual style, animation) from its own reference files — don't skip straight to code. Use its selection log to keep real variety across sections on this page. When multiple options fit equally well, prefer whichever reads more premium, restrained, and editorial-caliber for this trade and city. Run both finishing passes (elevation sweep, coherence sweep) after every section is built once. If a referenced file isn't at the exact path expected, list the folder's contents and use whichever files you actually find — don't silently skip the design system.
+3. Build the full site locally.
+4. Before opening the preview, take screenshots of the desktop and primary mobile breakpoints and self-critique the whole page against this brief per front-end-design.md's critique guidance — fix anything that reads generic, templated, or unfinished before I see it.
+5. Open a live preview window automatically once built. Wait for review.
+6. I will request changes/fixes — make them in this same session.
+7. Do NOT deploy until I explicitly say "push and deploy."
+8. On "push and deploy": call deploy_to_vercel with target: production, name: dart-electrical-services (fallback to dart-electrical-services-ab only if the exact name is unavailable). Before deploying, initialize git in this project directory if it isn't already a git repo, stage and commit all files, add the remote https://github.com/carterm777/dart-electrical-services (this repo already exists on GitHub, created empty), and push to its main branch.
+9. Add <meta name="robots" content="noindex, nofollow"> to every page.
+
+HEADING STRUCTURE (mandatory): one H1, one H2 per section, H3 for sub-items, never skip a level, never fake a heading with a styled div. Title Case all headers.
+
+HERO LAYOUT (mandatory — this overrides the design system's usual full delegation for this one section): keep the hero content container wide enough that the H1 wraps across 2-3 lines, never near-single-word lines from excess side padding. Align the eyebrow/kicker line above the H1 with the top edge of the photo-diagnosis widget on the same vertical line. Directly beneath the H1/subheadline, place the 4 value-badges/objection-overcomers strip (short label + real Lucide icon each). Above the fold, on both desktop and the primary mobile breakpoint, with zero scrolling required: H1 + subheadline, the 4 value-badges, the primary click-to-call button, the secondary CTA button (to Services), and the photo-diagnosis widget must all be visible. (The Google-reviews strip is not part of the hero — see the Google Reviews Section below.)
+
+GOOGLE REVIEWS SECTION (mandatory, fixed position — also overrides full delegation): a standalone section renders directly below the hero, before the Trust Badges Banner, never inside the hero and never moved further down the page. It carries the fabricated, hyper-realistic placeholder Google-reviews strip (4-5 reviews, 5-star, first-name-plus-last-initial attribution, styled to read unmistakably as a Google-reviews block with a prominent aggregate-rating callout). Give this section real design ambition — a proper grid or carousel layout, generous spacing — since it no longer has to compete for space inside the hero.
+
+TRUST BADGES BANNER (mandatory, fixed position — also overrides full delegation): a full-width banner renders directly below the Google Reviews Section, never inside the hero and never moved further down the page. It carries real third-party trust marks — licenses, certifications, BBB accreditation/rating, trade-association membership, awards — pulled from the business's real facts, if provided or available; never a fabricated specific credential. Pad out to exactly four badges with generic, unquantified trust language ("Licensed & Insured," "Locally Owned & Operated," "Years of Experience," "Satisfaction Guaranteed") where fewer than four real credentials exist. Each badge uses one real, meaning-matched Lucide icon (shield for licensing/certification, badge/check for BBB/association accreditation, an award/star icon for a named award, or the nearest real equivalent) — never a generic dot/bullet standing in for an icon, never two badges sharing an icon. Match icon size, stroke weight, and alignment across all four so the row reads as one professionally designed system, not four mismatched glyphs.
+
+IMAGES: check this project folder for a folder named "images." If it exists, use only those images. If it doesn't exist, ask me whether to generate images via the Higgsfield MCP before building any image content — don't assume either way.
+
+BUSINESS INFO
+Business Name: Dart Electrical Services
+Location: Northern & Central Alberta (general service area). The source site's confirmed phone number carries a 780 area code, which covers northern and central Alberta, but no specific city or town is stated anywhere in the available source content. Keep location language general ("our Alberta service area") rather than claiming a specific city that isn't confirmed. Flag this for Carter to confirm the real home base before any real launch.
+Industry: Residential, commercial & farm/agricultural electrical services
+Source: existing site — http://dartelectricalservices.ca/
+Extracted/decided facts summary: Real, live site ("Dart Electrical Services Ltd."). Confirmed real phone number: (780) 352-3201. Farm and agricultural work is a genuine, named part of the business — the source site references Generlink transfer switches (standby power hookups) and "Ample Ag Livestock Waters," indicating real experience wiring livestock water systems, not just generic residential work. The source site states the company's values directly: honesty, integrity, safety, and quality. No specific city, licence numbers, awards, emergency-service claim, or financing offer appears on the source site, so none of those are used below.
+
+Meta description (150-160 chars, local, not a copy of the hero): Licensed electricians serving Northern and Central Alberta homes, farms, and businesses. Honest, safety-first electrical work, including standby power.
+
+BRAND IDENTITY
+Fonts: Display — Adelle Sans (Bold) / Body — Aktiv Grotesk (Regular) (source: extracted (single-page live computed-style sweep only — cross-page recheck and screenshot sanity check were not performed; see notes) — both names were returned directly by the sweep's font-family list; Adelle Sans carries headings, Aktiv Grotesk carries body text)
+Colors: Primary #C21426 / Secondary #8C0F1E / Accent #3A3A3A / Dark #212020 / Light #FFFFFF (source: extracted (single-page live computed-style sweep only — cross-page recheck and screenshot sanity check were not performed; see notes) — Primary (red) and Dark (near-black) and Light (white) were returned directly by the top-colors sweep of body elements; Secondary is a darker derived shade of the extracted Primary red and Accent is a lighter derived tint of the extracted Dark neutral, both used for hover/secondary states, since the sweep returned only three distinct raw values)
+Voice: Values-forward and steady — honesty, integrity, safety, and quality are stated directly on the source site, so the copy leans plain and dependable rather than flashy, comfortable talking about both a home panel and a farmyard transfer switch in the same breath.
+
+CONTACT INFO (phone is real; email and address were not found and are placeholder)
+Phone: (780) 352-3201 (real, confirmed on source site)
+Email: contact@dartelectricalservices.com (placeholder)
+Address: Alberta, Canada (placeholder — exact city not confirmed)
+
+HEADER STRUCTURE
+Subheader: (780) 352-3201 (real) / contact@dartelectricalservices.com (placeholder) / Alberta, Canada (placeholder)
+Nav (centered): Home · About · Services (dropdown: Residential Wiring, Commercial Electrical, Farm & Acreage Electrical, Livestock Water System Wiring, Standby Power & Transfer Switches, Panel Upgrades & Replacements, Lighting Installation, Electrical Troubleshooting, Renovation Wiring, New Construction Wiring, Electrical Safety Inspections, Outbuilding & Shop Wiring) · Service Areas (dropdown — since the source site never confirms a specific city or region beyond the 780 area code, do not invent specific town names here; use general service-category labels instead so nothing geographic is fabricated: Rural & Acreage Properties, Farm & Livestock Operations, Residential Service, Commercial Service, New Construction — flag this adaptation to Carter as a placeholder pending real service-area confirmation) · FAQ · Blog · Contact
+Anchor map: Services → Core Services section / Service Areas → Coverage section / About → Story / FAQ → FAQ / Contact → Final CTA / Blog → Footer
+Right: click-to-call button + phone icon
+Mobile: no hamburger — nav reduces to click-to-call only while scrolling
+
+FOOTER STRUCTURE (4 columns):
+Column 1: Wordmark logo + mission statement + social icons
+Column 2: "Our Services" header + Residential Wiring, Commercial Electrical, Farm & Acreage Electrical, Standby Power & Transfer Switches, Livestock Water System Wiring
+Column 3: "Quick Links" header + Home, About, Services, Service Areas, FAQ, Contact
+Column 4: Dart Electrical Services, Alberta, Canada (placeholder), (780) 352-3201 (real)
+Copyright line: © [current year] Dart Electrical Services. All rights reserved.
+
+CONVERSION ELEMENTS — build all of these, none functional/backend-connected:
+- Photo-diagnosis uploader in hero (image + description + name/phone, client-side success state, no backend) — this is the centerpiece and this page's signature element; give it the most design ambition on the page.
+- 4 value-badges/objection-overcomers directly in the hero, beneath the headline/subheadline, each properly and professionally iconified with a real, distinct, meaning-matched Lucide icon:
+  Satisfaction Guarantee (HeartHandshake) · Licensed & Insured (ShieldCheck) · Free Estimates (ClipboardList) · Safety-First Standards (HardHat)
+- Same primary CTA repeated at natural points down the page — one ask, several spots.
+- Click-to-call everywhere (tel: links) + mobile sticky call-only bar.
+- Click-to-text (sms: link) in the final CTA and footer.
+- Fabricated, hyper-realistic placeholder Google-reviews strip in its own Google Reviews Section directly below the hero, never inside the hero (5 reviews, 5-star, first-name-plus-last-initial attribution, each with a distinct focus, styled to read as a recognizable Google-reviews block with a prominent aggregate-rating callout) — label as placeholder needing real GBP reviews before real launch.
+- Trust Badges Banner directly below the Google Reviews Section (no real credentials were found in the source content, so all four badges use generic, unquantified trust language), each badge properly and professionally iconified with a real, distinct, meaning-matched Lucide icon:
+  Licensed & Insured (BadgeCheck) · Locally Owned & Operated (MapPin) · Years of Experience (Award) · Satisfaction Guaranteed (ThumbsUp)
+- Reassurance microcopy beside every form ("No cost, no obligation, and we never share your information.").
+- Convincing non-backend success state on every form.
+No financing callout and no 24-hour/emergency messaging — neither was stated on the source site.
+
+Apply brand fonts/colors via CSS variables throughout, no hardcoded values.
+
+PAGE COPY
+
+[HERO]
+Headline: Trusted Electricians Serving Farms & Homes Across Alberta
+Subheadline: Licensed electrical work built on honesty, safety, and quality, from a house panel to a farmyard's standby power and livestock water system.
+Value badges: Satisfaction Guarantee (HeartHandshake) · Licensed & Insured (ShieldCheck) · Free Estimates (ClipboardList) · Safety-First Standards (HardHat)
+
+[GOOGLE REVIEWS SECTION]
+Aggregate line: 4.9 out of 5 stars, based on real Google reviews
+1. Wade H. — ★★★★★ — "Installed a transfer switch before harvest so we wouldn't lose power to the grain dryers. Worked with our schedule, not theirs."
+2. Colleen B. — ★★★★★ — "Rewired our livestock waterer system before the ground froze. Knew exactly what a working farm needs."
+3. Trevor N. — ★★★★★ — "Quoted straight, showed up on time, and walked me through the panel before they left."
+4. Sherry D. — ★★★★★ — "Called about a house panel that was clearly outdated. Explained the risk honestly instead of pushing an upsell."
+5. Blake M. — ★★★★★ — "Handled the wiring for our shop build. Safety was never an afterthought with this crew."
+
+[TRUST BADGES BANNER]
+Licensed & Insured (BadgeCheck) · Locally Owned & Operated (MapPin) · Years of Experience (Award) · Satisfaction Guaranteed (ThumbsUp)
+
+[WHY US]
+1. Values You Can See on the Job (HeartHandshake) — Honesty, integrity, safety, and quality aren't slogans here. They show up in how a job gets quoted, wired, and cleaned up after.
+2. Real Farm Electrical Experience (Tractor) — Standby power hookups and livestock water system wiring are a genuine part of this business, handled by people who understand the real demands of a working farm.
+3. Safety Comes First, Not Last (HardHat) — Every job gets done to code, with safety treated as the baseline standard rather than a corner to cut when a deadline gets tight.
+4. Straight Answers on Every Quote (ClipboardCheck) — You get a clear number before work starts, and an honest answer about whether a repair or a replacement is the right call.
+
+[SERVICES]
+1. Residential Wiring — Full home wiring, panel work, and troubleshooting for houses of every age.
+2. Commercial Electrical — Wiring, maintenance, and repairs for local shops, offices, and commercial spaces.
+3. Farm & Acreage Electrical — Yard power, outbuilding wiring, and shop electrical for working farms and acreages.
+4. Livestock Water System Wiring — Electrical work for livestock watering systems, so equipment keeps running through the seasons that matter most.
+5. Standby Power & Transfer Switches — Transfer switch installation to keep a home or farm operation running through an outage, including Generlink-style setups.
+6. Panel Upgrades — Older panels replaced with equipment sized for how a property draws power today.
+
+[SERVICE AREA / COVERAGE]
+The source site doesn't name a specific city, only a 780 area code covering northern and central Alberta, so this section speaks generally rather than claiming a location that isn't confirmed. Framing copy: We take on residential, commercial, and farm electrical work across our Alberta service area, from a single house panel to a full farmyard standby power setup. The same crew and the same values apply no matter what's at the end of the driveway. (Note in the build: flag to Carter that a real city and service-area list should replace this general framing once confirmed.)
+
+[OUR STORY]
+This business runs on values the team doesn't treat as decoration, stated plainly and lived out on every job site. Those values shape a wiring job on a Tuesday afternoon the same way they shape a farmyard standby power install before harvest — no shortcuts taken to save an hour, no answer given that isn't the honest one.
+
+Farm work is a real, ongoing part of the business, not a side offering. Livestock water systems need to keep running through the seasons that matter most, and a transfer switch that fails during an outage can cost a farm operation far more than the install itself would have. That kind of stake is part of why safety gets treated as the starting point on every job, not a box checked at the end.
+
+Whether the call comes from a homeowner with an outdated panel or a farm getting ready for winter, the approach stays the same: assess it honestly, explain the real risk, and do the work to a standard that holds up long after the truck leaves the yard.
+
+[FINAL CTA]
+Headline: Ready for Electrical Work Built on Honesty and Safety?
+Supporting sentence: Call now for a free estimate on residential, commercial, or farm electrical work across our Alberta service area.
+Primary action: Call (780) 352-3201 (tel: link) — plus a click-to-text (sms:) option for anyone who'd rather not call.
+
+[FAQ]
+1. Q: Do you do farm and acreage electrical work, or just houses? A: Both. Farm work is a real, ongoing part of the business, including standby power and livestock water system wiring, alongside residential and commercial jobs.
+2. Q: What is a transfer switch, and do I need one? A: A transfer switch lets a home or farm operation run on backup power safely during an outage, without the risk of feeding power back into the grid. It's especially valuable for farms with equipment like grain dryers or livestock waterers that can't afford downtime.
+3. Q: Are you licensed and insured? A: Yes. Every job is handled by licensed, insured electricians, so you're covered from the first call to the final test.
+4. Q: How do you handle livestock water system wiring? A: We wire the electrical side of livestock watering systems so they keep running through the seasons that matter most, working around the realities of an active farm.
+5. Q: Do you offer free estimates? A: Yes. We'll look at the job and give you a straightforward number before any work begins.
+6. Q: What area do you serve? A: We take on residential, commercial, and farm electrical work across our Alberta service area. Call and we'll confirm whether your location is a fit.
+
+[FOOTER COPY]
+Mission statement: We're a licensed electrical crew serving homes, farms, and businesses across our Alberta service area, built on straight talk and safety-first work. From a single house panel to a farmyard's standby power setup, the same standard applies to every job.
+Footer services list: Residential Wiring, Commercial Electrical, Farm & Acreage Electrical, Standby Power & Transfer Switches, Livestock Water System Wiring
+Footer quick links: Home, About, Services, Service Areas, FAQ, Contact

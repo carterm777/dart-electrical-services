@@ -1,0 +1,134 @@
+/* ── Why Us — Alternating Benefit List / Filled Icon Badges ──────────────────
+   The page's first light band, and its first slow read. Each row also carries
+   Image with Color-Block Corner Accent, alternating side with the zig-zag.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.why-rule { max-width: 190px; }
+.why-eyebrow { margin-block-start: var(--s-6); }
+
+.why-list {
+  display: grid;
+  gap: clamp(3rem, 5vw, 5.5rem);
+  margin-block-start: var(--s-11);
+}
+
+.why-row {
+  display: grid;
+  gap: var(--s-7);
+  align-items: center;
+}
+@media (min-width: 861px) {
+  .why-row {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(2.5rem, 3.6vw, 3.75rem);
+  }
+  .why-row[data-flip="true"] .why-media { order: 2; }
+}
+
+/* ── Media ───────────────────────────────────────────────────────────────── */
+.why-media { position: relative; margin: 0; }
+
+/* A pale plane offset behind the photograph — depth without a second colour
+   field, and it holds the composition together on an otherwise white band. */
+.why-offset {
+  /* Kept just inside the gutter so the outward-offset plane never widens the
+     document at any breakpoint. */
+  --why-plane: 18px;
+  position: absolute;
+  inset-block: var(--why-plane) calc(var(--why-plane) * -1);
+  inset-inline: calc(var(--why-plane) * -1) var(--why-plane);
+  background: var(--paper-3);
+  pointer-events: none;
+}
+.why-row[data-flip="true"] .why-offset {
+  inset-inline: var(--why-plane) calc(var(--why-plane) * -1);
+}
+
+.why-frame {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--paper-3);
+  z-index: 1;
+}
+.why-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 52%;
+  transition: transform 900ms var(--ease-out-quart);
+}
+.why-row:hover .why-frame img { transform: scale(1.035); }
+
+/* Image with Color-Block Corner Accent — one hard red edge per row, on the
+   outer side, alternating with the zig-zag. */
+.why-corner {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  width: var(--s-4);
+  height: 42%;
+  background: var(--red);
+  z-index: 2;
+}
+.why-row[data-flip="true"] .why-corner {
+  inset-inline-start: auto;
+  inset-inline-end: 0;
+}
+
+/* ── Text ────────────────────────────────────────────────────────────────── */
+.why-text { max-width: 44ch; }
+.why-hair {
+  display: block;
+  width: 44px;
+  height: var(--hair);
+  background: var(--ink-150);
+  margin-block-start: var(--s-5);
+}
+
+/* Filled Icon Badges — solid brand block, white glyph, one size everywhere. */
+.why-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  background: var(--red);
+  color: var(--light);
+  box-shadow: var(--el-red);
+}
+.why-icon .lucide { width: 23px; height: 23px; stroke-width: var(--icon-stroke); }
+
+.why-h3 {
+  font-size: var(--fs-2xl);
+  letter-spacing: var(--tr-tightest);
+  line-height: 1.1;
+  color: var(--text-on-light);
+  margin-block-start: var(--s-6);
+}
+.why-body {
+  font-size: var(--fs-base);
+  line-height: var(--lh-copy);
+  color: var(--text-on-light-mute);
+  margin-block-start: var(--s-5);
+}
+
+/* A hairline under every row but the last, so the rhythm reads as a list. */
+.why-row + .why-row { padding-block-start: clamp(2.5rem, 4vw, 4rem); border-block-start: var(--hair) solid var(--rule-light); }
+
+@media (max-width: 860px) {
+  .why-list { gap: var(--s-10); margin-block-start: var(--s-9); }
+  .why-frame { aspect-ratio: 16 / 9; }
+  .why-offset { --why-plane: 12px; }
+  .why-h3 { font-size: var(--fs-xl); margin-block-start: var(--s-5); }
+  .why-icon { width: 42px; height: 42px; }
+  .why-icon .lucide { width: 20px; height: 20px; }
+  .why-text { max-width: none; }
+}
+@media (max-width: 640px) {
+  .why-offset { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .why-row:hover .why-frame img { transform: none; }
+}

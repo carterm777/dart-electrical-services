@@ -1,0 +1,329 @@
+/* ── Photo-diagnosis widget — the signature element ──────────────────────────
+   Visual style: Dark Mode Form Panel with a single red progress rule.
+   Everything else on this page is deliberately quieter than this panel.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.pd {
+  position: relative;
+  --glow-color: rgb(194 20 38 / 0.20);
+  --glow-size: 380px;
+  background:
+    linear-gradient(180deg, var(--ink-850) 0%, var(--ink-950) 100%);
+  box-shadow: var(--el-panel);
+  padding: var(--s-7) var(--s-7) var(--s-6);
+  isolation: isolate;
+}
+.pd > * { position: relative; z-index: 2; }
+
+/* A single red hard edge across the top — the direction's "red as a hard edge". */
+.pd::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: var(--rule-thick);
+  background: var(--red);
+  z-index: 3;
+}
+
+/* Corner brackets — industrial framing, not a border box. */
+.pd-corner {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  z-index: 3;
+  pointer-events: none;
+}
+.pd-corner--tl {
+  inset-block-start: 12px;
+  inset-inline-start: 12px;
+  border-block-start: var(--hair) solid var(--w-30);
+  border-inline-start: var(--hair) solid var(--w-30);
+}
+.pd-corner--br {
+  inset-block-end: 12px;
+  inset-inline-end: 12px;
+  border-block-end: var(--hair) solid var(--w-30);
+  border-inline-end: var(--hair) solid var(--w-30);
+}
+
+/* ── Head ────────────────────────────────────────────────────────────────── */
+.pd-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+.pd-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-size: var(--fs-micro);
+  font-weight: var(--w-semi);
+  letter-spacing: var(--tr-widest);
+  text-transform: uppercase;
+  color: var(--light);
+  line-height: 1;
+}
+.pd-kicker .lucide { width: 14px; height: 14px; color: var(--red); }
+.pd-count {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tr-wide);
+  text-transform: uppercase;
+  color: var(--ink-300);
+}
+.pd-title {
+  font-size: var(--fs-xl);
+  letter-spacing: var(--tr-tightest);
+  line-height: var(--lh-tight);
+  margin-block-start: var(--s-4);
+  color: var(--light);
+}
+.pd-sub {
+  font-size: var(--fs-2xs);
+  line-height: 1.55;
+  color: var(--ink-300);
+  margin-block-start: var(--s-3);
+  max-width: 46ch;
+}
+
+/* ── Site-specific motion #1 — Diagnostic Progress Rule ──────────────────── */
+.pd-progress {
+  position: relative;
+  height: 2px;
+  background: var(--w-11);
+  margin-block: var(--s-6) 0;
+}
+.pd-progress-fill {
+  position: absolute;
+  inset: 0;
+  background: var(--red);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform var(--t-slow) var(--ease-out-quart);
+  box-shadow: 0 0 12px var(--red-45);
+}
+.pd-progress-legend {
+  display: flex;
+  justify-content: space-between;
+  margin-block-start: var(--s-3);
+}
+.pd-progress-legend li {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tr-wide);
+  text-transform: uppercase;
+  color: var(--ink-400);
+  transition: color var(--t-slow) var(--ease-out-cubic);
+}
+.pd-progress-legend li[data-done="true"] { color: var(--light); }
+
+/* ── Form ────────────────────────────────────────────────────────────────── */
+.pd-form { display: grid; gap: var(--s-5); margin-block-start: var(--s-6); }
+
+.pd-drop {
+  position: relative;
+  background: var(--w-04);
+  box-shadow: inset 0 0 0 var(--hair) var(--w-18);
+  transition: box-shadow var(--t-base) var(--ease-out-cubic), background-color var(--t-base) var(--ease-out-cubic);
+}
+.pd-drop[data-drag="true"] {
+  background: var(--red-10);
+  box-shadow: inset 0 0 0 var(--hair) var(--red);
+}
+.pd-drop-trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  width: 100%;
+  padding: var(--s-5);
+  text-align: left;
+}
+.pd-drop-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: none;
+  background: var(--red);
+  color: var(--light);
+  transition: transform var(--t-base) var(--ease-out-cubic);
+}
+.pd-drop-icon .lucide { width: 20px; height: 20px; }
+.pd-drop-trigger:hover .pd-drop-icon { transform: translate3d(0, -2px, 0); }
+.pd-drop-copy { display: grid; gap: 3px; min-width: 0; }
+.pd-drop-lead {
+  font-size: var(--fs-xs);
+  font-weight: var(--w-semi);
+  color: var(--light);
+  letter-spacing: var(--tr-tight);
+}
+.pd-drop-hint { font-size: var(--fs-micro); color: var(--ink-300); line-height: 1.45; }
+
+.pd-preview { display: flex; align-items: center; gap: var(--s-5); padding: var(--s-4); }
+.pd-preview img {
+  width: 58px;
+  height: 58px;
+  object-fit: cover;
+  object-position: center;
+  flex: none;
+  box-shadow: 0 0 0 var(--hair) var(--w-18);
+}
+.pd-preview-meta { min-width: 0; flex: 1; }
+.pd-preview-name {
+  font-size: var(--fs-2xs);
+  font-weight: var(--w-med);
+  color: var(--light);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pd-preview-size { font-size: var(--fs-micro); color: var(--red); letter-spacing: var(--tr-wide); text-transform: uppercase; }
+.pd-preview-clear {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  color: var(--ink-200);
+  box-shadow: inset 0 0 0 var(--hair) var(--w-18);
+  transition: color var(--t-base) var(--ease-out-cubic), background-color var(--t-base) var(--ease-out-cubic);
+}
+.pd-preview-clear:hover { color: var(--light); background: var(--red); }
+.pd-preview-clear .lucide { width: 15px; height: 15px; }
+
+/* ── Fields ──────────────────────────────────────────────────────────────── */
+.pd-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-5); }
+.pd-field { display: grid; gap: var(--s-2); min-width: 0; }
+.pd-field label {
+  font-size: var(--fs-micro);
+  font-weight: var(--w-semi);
+  letter-spacing: var(--tr-wider);
+  text-transform: uppercase;
+  color: var(--ink-300);
+}
+.pd-field input,
+.pd-field textarea {
+  width: 100%;
+  background: var(--w-04);
+  color: var(--light);
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  padding: var(--s-4);
+  border: 0;
+  border-radius: var(--r-0);
+  box-shadow: inset 0 0 0 var(--hair) var(--w-18);
+  transition: box-shadow var(--t-base) var(--ease-out-cubic), background-color var(--t-base) var(--ease-out-cubic);
+}
+.pd-field textarea { resize: none; }
+.pd-field input::placeholder,
+.pd-field textarea::placeholder { color: var(--ink-400); }
+/* Field Focus Highlight. The outline is deliberately left to the base focus
+   ring so keyboard focus stays unmistakable on top of the red field state. */
+.pd-field input:focus,
+.pd-field textarea:focus {
+  background: var(--w-07);
+  box-shadow: inset 0 0 0 var(--hair) var(--red), 0 0 0 3px var(--red-16);
+}
+.pd-field [aria-invalid="true"] { box-shadow: inset 0 0 0 var(--hair) var(--red); }
+
+.pd-error {
+  font-size: var(--fs-micro);
+  color: var(--red);
+  letter-spacing: var(--tr-none);
+  line-height: 1.4;
+}
+
+.pd-rest { display: grid; gap: var(--s-5); }
+.pd-submit { margin-block-start: var(--s-1); }
+.pd-reassure { justify-content: flex-start; }
+
+/* Only ever visible in the compact mobile state. */
+.pd-more { display: none; }
+
+/* ── Success state ───────────────────────────────────────────────────────── */
+.pd-done { margin-block-start: var(--s-7); display: grid; gap: var(--s-4); }
+.pd-done-mark { color: var(--red); }
+@keyframes pd-tick { from { stroke-dashoffset: 34; } to { stroke-dashoffset: 0; } }
+.pd-done-tick {
+  stroke-dasharray: 34;
+  stroke-dashoffset: 34;
+  animation: pd-tick 520ms var(--ease-out-quart) 120ms forwards;
+}
+.pd-done-title { font-size: var(--fs-2xl); letter-spacing: var(--tr-tightest); color: var(--light); }
+.pd-done-copy { font-size: var(--fs-xs); line-height: 1.6; color: var(--ink-200); max-width: 44ch; }
+.pd-done-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-4);
+  margin-block-start: var(--s-2);
+  padding-block: var(--s-4);
+  border-block: var(--hair) solid var(--w-11);
+}
+.pd-done-meta dt {
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tr-wider);
+  text-transform: uppercase;
+  color: var(--ink-400);
+}
+.pd-done-meta dd {
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  color: var(--light);
+  margin-block-start: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pd-done-actions { display: grid; gap: var(--s-4); margin-block-start: var(--s-2); }
+.pd-reset {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  justify-self: center;
+  font-size: var(--fs-2xs);
+  color: var(--ink-200);
+  transition: color var(--t-base) var(--ease-out-cubic);
+}
+.pd-reset:hover { color: var(--light); }
+.pd-reset .lucide { width: 14px; height: 14px; }
+
+/* ── Compact initial state on the small breakpoint, so the widget still
+      clears the fold at 390x844. ──────────────────────────────────────────── */
+@media (max-width: 980px) {
+  .pd { padding: var(--s-5) var(--s-5) var(--s-5); }
+  .pd-corner { display: none; }
+  .pd-title { font-size: var(--fs-lg); }
+  .pd-sub { display: none; }
+  .pd-progress { margin-block-start: var(--s-4); }
+  .pd-form { gap: var(--s-4); margin-block-start: var(--s-4); }
+  .pd-drop-trigger { padding: var(--s-4); gap: var(--s-4); }
+  .pd-drop-icon { width: 36px; height: 36px; }
+  .pd-drop-hint { display: none; }
+  .pd-field textarea { min-height: 0; }
+  .pd-rest { gap: var(--s-4); }
+
+  /* Compact initial state: kicker, title, progress rule and the drop target.
+     The rest of the form arrives once the visitor engages with either. */
+  .pd[data-expanded="false"] .pd-rest { display: none; }
+  .pd[data-expanded="false"] .pd-more {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-3);
+    justify-self: start;
+    font-size: var(--fs-2xs);
+    color: var(--ink-200);
+  }
+  .pd[data-expanded="false"] .pd-more .lucide { width: 14px; height: 14px; color: var(--red); }
+}
+
+@media (max-width: 420px) {
+  .pd-grid { grid-template-columns: minmax(0, 1fr); gap: var(--s-3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pd-progress-fill { transition: none !important; }
+  .pd-done-tick { animation: none !important; stroke-dashoffset: 0 !important; }
+}

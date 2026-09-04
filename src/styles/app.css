@@ -1,0 +1,263 @@
+/* ── Page-level composition ─────────────────────────────────────────────────
+   Only the primitives this site reuses across sections live here: the tonal
+   bands, the eyebrow + two-tone rule, the button set, the section head, and
+   the site-specific motion techniques written for this build.
+
+   Specificity contract: section vertical rhythm stays owned by .section and
+   its modifiers (base.css). Nothing here re-declares section padding except
+   through a .section--* modifier at the same single-class weight.
+   ───────────────────────────────────────────────────────────────────────── */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: var(--lh-copy);
+  color: var(--text-on-dark);
+  background: var(--surface-dark);
+  font-weight: var(--w-reg);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: var(--w-black);
+  letter-spacing: var(--tr-tighter);
+  line-height: var(--lh-tight);
+}
+
+::selection { background: var(--red); color: var(--light); }
+
+/* ── Extra section-rhythm modifiers (single-class weight, same as base) ─── */
+.section--band { padding-block: clamp(2.25rem, 3vw, 3.25rem); }
+.section--rail { padding-block: clamp(1.15rem, 1.6vw, 1.6rem); }
+
+/* ── Tonal bands ─────────────────────────────────────────────────────────── */
+.band-deep   { background: var(--surface-deep); color: var(--text-on-dark); }
+.band-dark   { background: var(--surface-dark); color: var(--text-on-dark); }
+.band-raised { background: var(--surface-raised); color: var(--text-on-dark); }
+.band-light  { background: var(--surface-light); color: var(--text-on-light); }
+.band-light-2{ background: var(--surface-light-2); color: var(--text-on-light); }
+
+/* ── Skip link ───────────────────────────────────────────────────────────── */
+.skip-link {
+  background: var(--red);
+  color: var(--light);
+  font-size: var(--fs-xs);
+  font-weight: var(--w-semi);
+  letter-spacing: var(--tr-wide);
+  text-transform: uppercase;
+}
+
+/* ── Eyebrow + two-tone rule ─────────────────────────────────────────────── */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  font-family: var(--font-body);
+  font-size: var(--fs-3xs);
+  font-weight: var(--w-semi);
+  letter-spacing: var(--tr-widest);
+  text-transform: uppercase;
+  line-height: 1;
+  margin: 0;
+}
+.eyebrow--dark { color: var(--text-on-dark-mute); }
+.eyebrow--light { color: var(--text-on-light-mute); }
+
+.eyebrow-mark {
+  width: 26px;
+  height: var(--hair);
+  background: var(--red);
+  flex: none;
+}
+
+/* Two-tone rule: a graphite hairline with a short red segment riding it.
+   Site-specific technique #3 — the graphite draws, the red slides after. */
+.tone-rule {
+  position: relative;
+  display: block;
+  height: var(--rule-thick);
+  width: 100%;
+  overflow: hidden;
+  background: var(--rule-dark);
+}
+.tone-rule--light { background: var(--rule-light); }
+.tone-rule::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: var(--tone-seg, 38%);
+  background: var(--red);
+  transform: translate3d(-101%, 0, 0);
+  transition: transform var(--t-slower) var(--ease-out-quart) 140ms;
+}
+[data-in="true"] .tone-rule::after,
+.tone-rule[data-in="true"]::after { transform: translate3d(0, 0, 0); }
+
+/* ── Section head ────────────────────────────────────────────────────────── */
+.sect-head { max-width: 64ch; }
+.sect-head h2 {
+  font-size: var(--fs-4xl);
+  letter-spacing: var(--tr-tightest);
+  margin-block-start: var(--s-5);
+}
+.sect-head .sect-lede {
+  font-size: var(--fs-md);
+  line-height: var(--lh-copy);
+  margin-block-start: var(--s-5);
+  max-width: 58ch;
+}
+.band-dark .sect-lede, .band-deep .sect-lede, .band-raised .sect-lede { color: var(--text-on-dark-mute); }
+.band-light .sect-lede, .band-light-2 .sect-lede { color: var(--text-on-light-mute); }
+
+.sect-head--split {
+  display: grid;
+  gap: var(--s-7) var(--s-10);
+  align-items: end;
+  max-width: none;
+}
+@media (min-width: 900px) {
+  .sect-head--split { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); }
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.btn {
+  --btn-y: 0.95rem;
+  --btn-x: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-4);
+  padding: var(--btn-y) var(--btn-x);
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--w-semi);
+  letter-spacing: var(--tr-wide);
+  text-transform: uppercase;
+  line-height: 1;
+  border-radius: var(--r-1);
+  position: relative;
+  isolation: isolate;
+  text-align: center;
+  transition:
+    transform var(--hover-dur) var(--ease-out-cubic),
+    background-color var(--hover-dur) var(--ease-out-cubic),
+    box-shadow var(--hover-dur) var(--ease-out-cubic),
+    color var(--hover-dur) var(--ease-out-cubic);
+}
+.btn .lucide { width: var(--icon); height: var(--icon); }
+
+.btn--primary {
+  background: var(--red);
+  color: var(--light);
+  box-shadow: var(--el-red);
+}
+.btn--primary:hover { background: var(--red-deep); transform: translate3d(0, -2px, 0); box-shadow: var(--el-4), var(--el-red); }
+.btn--primary:active { transform: translate3d(0, 0, 0); }
+
+.btn--ghost-dark {
+  background: transparent;
+  color: var(--light);
+  box-shadow: inset 0 0 0 var(--hair) var(--w-30);
+}
+.btn--ghost-dark:hover { background: var(--w-07); box-shadow: inset 0 0 0 var(--hair) var(--light); transform: translate3d(0, -2px, 0); }
+
+.btn--ghost-light {
+  background: transparent;
+  color: var(--text-on-light);
+  box-shadow: inset 0 0 0 var(--hair) var(--ink-150);
+}
+.btn--ghost-light:hover { background: var(--paper-2); box-shadow: inset 0 0 0 var(--hair) var(--ink-500); transform: translate3d(0, -2px, 0); }
+
+.btn--lg { --btn-y: 1.15rem; --btn-x: 1.9rem; font-size: var(--fs-sm); }
+.btn--sm { --btn-y: 0.7rem; --btn-x: 1rem; font-size: var(--fs-3xs); }
+.btn--block { width: 100%; }
+
+/* Magnetic hover — a few pixels at most, per the entry's premium note. */
+.btn--magnetic { will-change: transform; }
+.btn--magnetic:hover { transform: translate3d(var(--mag-x, 0px), calc(-2px + var(--mag-y, 0px)), 0); }
+
+/* ── Reassurance microcopy ───────────────────────────────────────────────── */
+.reassure {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-3);
+  font-size: var(--fs-2xs);
+  line-height: 1.45;
+  letter-spacing: var(--tr-none);
+}
+.reassure .lucide { width: 15px; height: 15px; margin-block-start: 2px; color: var(--red); }
+.reassure--dark { color: var(--text-on-dark-dim); }
+.reassure--light { color: var(--text-on-light-mute); }
+
+/* ── Placeholder disclosure — used twice, always quiet ───────────────────── */
+.placeholder-note {
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tr-wide);
+  text-transform: uppercase;
+  line-height: 1.6;
+  color: var(--ink-400);
+}
+.placeholder-note--light { color: var(--ink-300); }
+
+/* ── Underline sweep, shared by nav and footer links ─────────────────────── */
+.sweep {
+  position: relative;
+  display: inline-block;
+}
+.sweep::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: var(--hair);
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 240ms var(--ease-out-quart);
+}
+.sweep:hover::after,
+a:focus-visible .sweep::after,
+button:focus-visible .sweep::after { transform: scaleX(1); }
+
+/* ── Fine grain, used on the large dark photographic bands ───────────────── */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.3;
+  background-image: radial-gradient(var(--w-07) 0.5px, transparent 0.6px);
+  background-size: 3px 3px;
+  z-index: 1;
+}
+
+/* ── Site-specific motion #2: Badge Filament Warm-Up ─────────────────────── */
+@keyframes filament-warm {
+  0%   { color: var(--ink-400); }
+  55%  { color: var(--red); }
+  100% { color: var(--red); }
+}
+
+/* ── Spinner for the sending state (no icon dependency) ──────────────────── */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  width: 15px;
+  height: 15px;
+  border-radius: var(--r-pill);
+  border: 2px solid var(--w-30);
+  border-top-color: var(--light);
+  animation: spin 720ms linear infinite;
+  flex: none;
+}
+
+/* Clearance for the mobile sticky call bar. */
+@media (max-width: 980px) {
+  body { padding-block-end: 74px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tone-rule::after { transform: none !important; }
+  .spinner { animation: none !important; }
+}

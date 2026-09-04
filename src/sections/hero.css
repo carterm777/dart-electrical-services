@@ -1,0 +1,218 @@
+/* ── Hero — Full-Bleed Image Hero / Gradient Scrim / Parallax Scroll Depth ───
+   Also the first of the two deliberate uses of Full-Bleed Background Photo
+   with Foreground Card: the photo-diagnosis panel is the foreground card.
+
+   The whole section is designed around one constraint: H1, subhead, four
+   badges, both CTAs and the widget all clear the fold at 1440x900 and
+   390x844 with zero scrolling.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--ink-950);
+  padding-block-start: calc(var(--header-h) + var(--s-9));
+  padding-block-end: var(--s-9);
+  isolation: isolate;
+}
+
+/* ── Photo bed ───────────────────────────────────────────────────────────── */
+.hero-bed { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.hero-bed-inner { position: absolute; inset: -8% 0; will-change: transform; }
+.hero-bed img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 58%;
+  filter: saturate(0.78) contrast(1.12) brightness(1.28);
+}
+
+/* Gradient Scrim — heavier on the left where the type sits, so the photograph
+   still reads as a photograph across the middle and behind the panel. */
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(96deg, var(--ink-950) 0%, rgb(14 13 13 / 0.94) 24%, rgb(14 13 13 / 0.6) 44%, rgb(14 13 13 / 0.24) 66%, rgb(14 13 13 / 0.4) 100%),
+    linear-gradient(180deg, rgb(14 13 13 / 0.8) 0%, transparent 22%, transparent 62%, rgb(14 13 13 / 0.92) 100%);
+}
+.hero-scrim-edge {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  height: var(--rule-thick);
+  background: linear-gradient(90deg, var(--red) 0%, var(--red) 22%, var(--w-11) 22%, var(--w-11) 100%);
+}
+
+.hero-shell { position: relative; z-index: 2; }
+
+/* ── Grid — the eyebrow and the widget share the same top edge ───────────── */
+.hero-grid {
+  display: grid;
+  gap: var(--s-9);
+  align-items: start;
+}
+@media (min-width: 981px) {
+  /* The band fills the viewport so its closing red rule lands on the fold line
+     rather than leaving a dead strip beneath it. */
+  .hero { min-height: 100vh; }
+  .hero-grid {
+    grid-template-columns: minmax(0, 1.06fr) minmax(430px, 0.94fr);
+    gap: clamp(2.5rem, 4vw, 4.5rem);
+  }
+}
+
+/* ── Copy stack ──────────────────────────────────────────────────────────── */
+.hero-eyebrow { line-height: 1; }
+
+.hero-h1 {
+  font-size: clamp(2rem, 2.9vw + 0.95rem, 3.35rem);
+  line-height: 1.02;
+  letter-spacing: var(--tr-tightest);
+  color: var(--light);
+  margin-block-start: var(--s-6);
+  max-width: 19ch;
+}
+/* Keep descenders out of the word-reveal mask. The kit emits the word space as
+   a sibling of the masked span, so no extra tracking is needed here. */
+.hero-h1 .wr-word { padding-block-end: 0.1em; margin-block-end: -0.1em; }
+
+.hero-sub {
+  font-size: var(--fs-md);
+  line-height: 1.58;
+  color: var(--ink-150);
+  margin-block-start: var(--s-6);
+  max-width: 56ch;
+}
+
+/* ── Value badges — 2x2, one system, four different meaning-matched icons ── */
+.hero-badges {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--hair);
+  margin-block-start: var(--s-8);
+  max-width: 560px;
+  background: var(--w-18);
+  box-shadow: 0 0 0 var(--hair) var(--w-18);
+}
+.hero-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-4) var(--s-5);
+  background: rgb(14 13 13 / 0.7);
+  backdrop-filter: blur(6px);
+  min-width: 0;
+}
+.hero-badge-icon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  color: var(--red);
+  box-shadow: inset 0 0 0 var(--hair) var(--red-45);
+}
+.hero-badge-icon .lucide { width: 17px; height: 17px; }
+.hero-badge-label {
+  font-size: var(--fs-3xs);
+  font-weight: var(--w-semi);
+  letter-spacing: var(--tr-wide);
+  text-transform: uppercase;
+  line-height: 1.25;
+  color: var(--light);
+}
+
+/* ── Actions ─────────────────────────────────────────────────────────────── */
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  margin-block-start: var(--s-8);
+}
+.hero-note {
+  font-size: var(--fs-2xs);
+  color: var(--ink-300);
+  margin-block-start: var(--s-5);
+  letter-spacing: var(--tr-none);
+}
+
+/* ── Widget column ───────────────────────────────────────────────────────── */
+.hero-widget { min-width: 0; }
+
+/* ── Scroll cue ──────────────────────────────────────────────────────────── */
+.hero-cue { display: none; }
+@media (min-width: 981px) and (min-height: 760px) {
+  .hero-cue {
+    display: flex;
+    align-items: center;
+    gap: var(--s-5);
+    margin-block-start: var(--s-11);
+    font-size: var(--fs-micro);
+    letter-spacing: var(--tr-wider);
+    text-transform: uppercase;
+    color: var(--ink-400);
+  }
+  .hero-cue-track {
+    position: relative;
+    display: block;
+    width: 96px;
+    height: var(--hair);
+    background: var(--w-18);
+    overflow: hidden;
+  }
+  .hero-cue-dot {
+    position: absolute;
+    inset-block: -1px;
+    inset-inline-start: 0;
+    width: 26px;
+    background: var(--red);
+    /* Three passes, then it stops. A cue that loops forever becomes furniture,
+       and the page already carries two ambient loops further down. */
+    animation: hero-cue-travel 3.2s var(--ease-in-out) 3 forwards;
+  }
+}
+@keyframes hero-cue-travel {
+  0%   { transform: translate3d(-26px, 0, 0); }
+  55%  { transform: translate3d(96px, 0, 0); }
+  100% { transform: translate3d(96px, 0, 0); }
+}
+
+/* ── Tablet ──────────────────────────────────────────────────────────────── */
+@media (max-width: 980px) {
+  .hero {
+    padding-block-start: calc(var(--header-h) + var(--s-6));
+    padding-block-end: var(--s-8);
+  }
+  .hero-grid { gap: var(--s-7); }
+  .hero-eyebrow { font-size: var(--fs-micro); letter-spacing: var(--tr-wider); gap: var(--s-3); }
+  .hero-h1 {
+    font-size: clamp(1.6875rem, 7.1vw, 2.75rem);
+    line-height: 1.04;
+    margin-block-start: var(--s-5);
+    max-width: 22ch;
+  }
+  .hero-sub {
+    font-size: var(--fs-sm);
+    line-height: 1.5;
+    margin-block-start: var(--s-5);
+    max-width: 60ch;
+  }
+  .hero-badges { margin-block-start: var(--s-6); max-width: none; }
+  .hero-badge { padding: var(--s-3) var(--s-4); gap: var(--s-3); }
+  .hero-badge-icon { width: 26px; height: 26px; }
+  .hero-badge-icon .lucide { width: 15px; height: 15px; }
+  .hero-badge-label { font-size: var(--fs-micro); letter-spacing: var(--tr-wide); }
+  .hero-actions { margin-block-start: var(--s-6); gap: var(--s-3); }
+  .hero-actions .btn { flex: 1 1 100%; }
+  .hero-note { display: none; }
+  .hero-bed img { object-position: 50% 55%; }
+}
+
+@media (max-width: 980px) and (min-width: 561px) {
+  .hero-actions .btn { flex: 1 1 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-cue-dot { animation: none !important; transform: translate3d(35px, 0, 0); }
+}

@@ -1,0 +1,127 @@
+/* ── Trust Badges Banner — Certification Badge Wall /
+      Dark Framed Credential Panel ────────────────────────────────────────
+   Four badges, four different meaning-matched Lucide icons, one icon box,
+   one stroke weight, one optical baseline. The frame is a brand-accent
+   hairline that fades graphite -> red -> graphite, per the entry's premium
+   execution note, not a hard rectangle edge.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.tb-panel {
+  position: relative;
+  background: linear-gradient(180deg, var(--ink-800) 0%, var(--ink-900) 62%, var(--ink-950) 100%);
+  padding: var(--s-8) var(--s-9);
+  box-shadow: var(--el-4);
+}
+.tb-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: var(--hair);
+  background: linear-gradient(90deg, var(--w-11) 0%, var(--red-70) 50%, var(--w-11) 100%);
+  -webkit-mask: linear-gradient(var(--mask-solid) 0 0) content-box, linear-gradient(var(--mask-solid) 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(var(--mask-solid) 0 0) content-box, linear-gradient(var(--mask-solid) 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.tb-head { display: grid; gap: var(--s-4); margin-block-end: var(--s-7); }
+.tb-rule { max-width: 120px; }
+.tb-title {
+  font-family: var(--font-body);
+  font-size: var(--fs-3xs);
+  font-weight: var(--w-semi);
+  letter-spacing: var(--tr-widest);
+  text-transform: uppercase;
+  color: var(--ink-300);
+  line-height: 1;
+}
+
+/* ── The four-badge row ──────────────────────────────────────────────────── */
+.tb-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+}
+.tb-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  padding-inline: var(--s-6);
+  min-width: 0;
+  opacity: 0;
+  transform: translate3d(0, 12px, 0) scale(0.985);
+  transition:
+    opacity 560ms var(--ease-out-cubic),
+    transform 560ms var(--ease-out-cubic);
+  transition-delay: calc(var(--tb-i) * 110ms);
+}
+.tb-badge:first-child { padding-inline-start: 0; }
+.tb-badge:last-child { padding-inline-end: 0; }
+.tb-badge + .tb-badge { border-inline-start: var(--hair) solid var(--w-18); }
+.tb-panel[data-in="true"] .tb-badge { opacity: 1; transform: none; }
+
+/* Identical box, identical stroke, identical optical baseline for all four. */
+.tb-icon {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  flex: none;
+  color: var(--ink-400);
+  background: var(--w-04);
+  box-shadow: inset 0 0 0 var(--hair) var(--w-18);
+}
+.tb-icon .lucide {
+  width: 25px;
+  height: 25px;
+  stroke-width: var(--icon-stroke);
+}
+
+/* Site-specific motion #2 — Badge Filament Warm-Up. */
+.tb-panel[data-in="true"] .tb-icon {
+  animation: filament-warm 460ms var(--ease-out-cubic) forwards;
+  animation-delay: calc(340ms + var(--tb-i) * 110ms);
+}
+.tb-panel[data-in="true"] .tb-badge:nth-child(1) .tb-icon { animation-delay: 340ms; }
+
+.tb-text { min-width: 0; }
+.tb-label {
+  font-family: var(--font-display);
+  font-size: var(--fs-base);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-tighter);
+  line-height: 1.18;
+  color: var(--light);
+}
+.tb-note {
+  font-size: var(--fs-2xs);
+  line-height: 1.45;
+  color: var(--ink-300);
+  margin-block-start: 6px;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 1080px) {
+  .tb-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-6) 0; }
+  .tb-badge { padding-inline: var(--s-6); }
+  .tb-badge:nth-child(odd) { padding-inline-start: 0; }
+  .tb-badge:nth-child(even) { padding-inline-end: 0; }
+  .tb-badge:nth-child(3) { border-inline-start: 0; }
+}
+@media (max-width: 560px) {
+  .tb-panel { padding: var(--s-6) var(--s-5); }
+  .tb-row { grid-template-columns: minmax(0, 1fr); gap: var(--s-5); }
+  .tb-badge { padding-inline: 0; }
+  .tb-badge + .tb-badge {
+    border-inline-start: 0;
+    border-block-start: var(--hair) solid var(--w-11);
+    padding-block-start: var(--s-5);
+  }
+  .tb-icon { width: 40px; height: 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tb-badge { opacity: 1; transform: none; transition: none !important; }
+  .tb-panel[data-in="true"] .tb-icon { animation: none !important; color: var(--red); }
+}

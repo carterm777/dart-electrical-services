@@ -1,0 +1,137 @@
+/* ── FAQ — Classic Accordion List / Numbered Question Treatment ──────────────
+   Deviation from the assigned Dark Mode Technical FAQ, justified in
+   SELECTION-LOG.md. The technical register is kept: oversized index numerals,
+   hairline dividers, no boxes, no shadows.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.faq-rule { max-width: 170px; }
+.faq-eyebrow { margin-block-start: var(--s-6); }
+
+.faq-list {
+  margin-block-start: var(--s-10);
+  border-block-start: var(--hair) solid var(--ink-150);
+}
+.faq-item {
+  border-block-end: var(--hair) solid var(--ink-150);
+  opacity: 0;
+  transform: translate3d(0, 12px, 0);
+  transition: opacity 520ms var(--ease-out-cubic), transform 520ms var(--ease-out-cubic);
+  transition-delay: calc(var(--faq-i) * 70ms);
+}
+.faq-list[data-in="true"] .faq-item { opacity: 1; transform: none; }
+
+.faq-h3 { font-family: inherit; font-weight: inherit; letter-spacing: normal; line-height: inherit; }
+
+.faq-trigger {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--s-5) var(--s-6);
+  width: 100%;
+  padding-block: var(--s-6);
+  text-align: left;
+  transition: color var(--t-base) var(--ease-out-cubic);
+}
+
+/* Numerals in a distinctly different scale and weight from the question text —
+   large, light and monospaced against tight, heavy display type. */
+.faq-num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xl);
+  font-weight: var(--w-reg);
+  letter-spacing: var(--tr-tight);
+  line-height: 1;
+  color: var(--ink-150);
+  min-width: 2.4ch;
+  align-self: start;
+  transition: color var(--t-base) var(--ease-out-cubic);
+}
+.faq-q {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-tighter);
+  line-height: 1.24;
+  color: var(--text-on-light);
+  transition: color var(--t-base) var(--ease-out-cubic);
+}
+.faq-trigger:hover .faq-q { color: var(--red); }
+.faq-trigger:hover .faq-num { color: var(--red); }
+.faq-item[data-open="true"] .faq-num { color: var(--red); }
+
+/* Icon Morph — a drawn plus whose vertical bar collapses into a minus. */
+.faq-mark {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex: none;
+  align-self: start;
+  margin-block-start: 3px;
+}
+.faq-mark-h,
+.faq-mark-v {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  background: var(--ink-500);
+  transition: transform 220ms var(--ease-in-out), background-color 220ms var(--ease-in-out);
+}
+.faq-mark-h { width: 18px; height: 2px; transform: translate3d(-50%, -50%, 0); }
+.faq-mark-v { width: 2px; height: 18px; transform: translate3d(-50%, -50%, 0) scaleY(1); }
+.faq-item[data-open="true"] .faq-mark-v { transform: translate3d(-50%, -50%, 0) scaleY(0); }
+.faq-item[data-open="true"] .faq-mark-h,
+.faq-item[data-open="true"] .faq-mark-v { background: var(--red); }
+.faq-trigger:hover .faq-mark-h,
+.faq-trigger:hover .faq-mark-v { background: var(--red); }
+
+/* ── Panel ───────────────────────────────────────────────────────────────── */
+.faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 380ms var(--ease-out-quart);
+}
+.faq-item[data-open="true"] .faq-panel { grid-template-rows: 1fr; }
+.faq-panel-inner { overflow: hidden; visibility: hidden; }
+.faq-item[data-open="true"] .faq-panel-inner { visibility: visible; }
+.faq-a {
+  font-size: var(--fs-sm);
+  line-height: 1.72;
+  color: var(--text-on-light-mute);
+  max-width: 68ch;
+  padding-inline-start: calc(var(--s-6) + 2.4ch);
+  padding-block-end: var(--s-7);
+}
+
+/* ── Foot ────────────────────────────────────────────────────────────────── */
+.faq-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-5);
+  margin-block-start: var(--s-9);
+  padding: var(--s-6) var(--s-7);
+  background: var(--paper);
+  box-shadow: inset 0 0 0 var(--hair) var(--ink-100), inset var(--rule-thick) 0 0 0 var(--red);
+}
+.faq-foot-text {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: var(--w-bold);
+  letter-spacing: var(--tr-tighter);
+  color: var(--text-on-light);
+  max-width: 40ch;
+}
+
+@media (max-width: 620px) {
+  .faq-trigger { gap: var(--s-4); padding-block: var(--s-5); }
+  .faq-q { font-size: var(--fs-base); }
+  .faq-a { padding-inline-start: 0; }
+  .faq-foot { padding: var(--s-5); }
+  .faq-foot .btn { flex: 1 1 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-item { opacity: 1; transform: none; transition-delay: 0s !important; }
+  .faq-panel { transition: none !important; }
+}

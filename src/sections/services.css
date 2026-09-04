@@ -1,0 +1,160 @@
+/* ── Services — Service Card Grid / Duotone Image Treatment per Service ──────
+   Duotone is a `mix-blend-mode: color` wash over a desaturated photograph, so
+   the photograph stays a photograph underneath. Site-specific motion #4,
+   Duotone Bleed-Back, fades the wash off on hover.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.svc { position: relative; }
+.svc-rule { max-width: 200px; }
+.svc-eyebrow { margin-block-start: var(--s-6); }
+
+.svc-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-6);
+  margin-block-start: var(--s-10);
+}
+@media (min-width: 700px) { .svc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1040px) { .svc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.svc-cell { display: flex; }
+
+.svc-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: var(--ink-850);
+  box-shadow: inset 0 0 0 var(--hair) var(--w-07);
+  overflow: hidden;
+  transition: transform var(--hover-dur) var(--ease-out-cubic),
+              box-shadow var(--hover-dur) var(--ease-out-cubic),
+              background-color var(--hover-dur) var(--ease-out-cubic);
+}
+.svc-card:hover {
+  transform: translate3d(0, -6px, 0);
+  background: var(--ink-800);
+  box-shadow: inset 0 0 0 var(--hair) var(--w-18), var(--el-4);
+}
+
+/* ── Duotone media ───────────────────────────────────────────────────────── */
+.svc-media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--ink-950);
+  isolation: isolate;
+}
+.svc-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 50%;
+  filter: grayscale(1) contrast(1.18) brightness(0.68);
+  transform: scale(1.001);
+  transition: filter 520ms var(--ease-out-cubic), transform 620ms var(--ease-out-quart);
+}
+/* The wash is deliberately restrained: red arrives only in the top corner and
+   drops out to neutral graphite by the middle of the frame, so six cards never
+   add up to one large red field. */
+.svc-duo {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(152deg, var(--red) 0%, var(--red-deep) 28%, transparent 62%);
+  mix-blend-mode: color;
+  opacity: 0.4;
+  transition: opacity 520ms var(--ease-out-cubic);
+}
+.svc-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(14 13 13 / 0.1) 0%, rgb(14 13 13 / 0.42) 58%, rgb(14 13 13 / 0.92) 100%);
+  pointer-events: none;
+}
+.svc-card:hover .svc-duo { opacity: 0; }
+.svc-card:hover .svc-media img { filter: grayscale(0) contrast(1.04) brightness(0.95); transform: scale(1.05); }
+
+/* ── Body ────────────────────────────────────────────────────────────────── */
+.svc-body {
+  position: relative;
+  padding: var(--s-6);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+/* An outlined marker rather than a second filled red badge — Why Us already
+   owns the filled-icon treatment on this page. */
+.svc-icon {
+  position: absolute;
+  inset-block-start: calc(var(--s-6) * -1);
+  inset-inline-start: var(--s-6);
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  background: var(--ink-950);
+  color: var(--red);
+  box-shadow: inset 0 0 0 var(--hair) var(--red-45);
+  transition: background-color var(--hover-dur) var(--ease-out-cubic),
+              color var(--hover-dur) var(--ease-out-cubic),
+              box-shadow var(--hover-dur) var(--ease-out-cubic);
+}
+.svc-card:hover .svc-icon {
+  background: var(--red);
+  color: var(--light);
+  box-shadow: var(--el-red);
+}
+.svc-icon .lucide { width: 21px; height: 21px; stroke-width: var(--icon-stroke); }
+
+.svc-h3 {
+  font-size: var(--fs-lg);
+  letter-spacing: var(--tr-tighter);
+  line-height: 1.2;
+  color: var(--light);
+  margin-block-start: var(--s-6);
+}
+.svc-copy {
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--ink-200);
+  margin-block-start: var(--s-4);
+}
+
+.svc-edge {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline: 0;
+  height: var(--rule-thick);
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 420ms var(--ease-out-quart);
+}
+.svc-card:hover .svc-edge { transform: scaleX(1); }
+
+/* ── Repeat CTA — one ask, several spots ─────────────────────────────────── */
+.svc-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-5);
+  margin-block-start: var(--s-10);
+  padding: var(--s-7);
+  background: var(--ink-950);
+  box-shadow: inset 0 0 0 var(--hair) var(--w-11), inset var(--rule-thick) 0 0 0 var(--red);
+}
+.svc-cta-text { flex: 1 1 340px; min-width: 0; }
+.svc-cta-h3 { font-size: var(--fs-xl); letter-spacing: var(--tr-tighter); color: var(--light); }
+.svc-cta-text p { font-size: var(--fs-sm); color: var(--ink-300); margin-block-start: var(--s-3); }
+
+@media (max-width: 620px) {
+  .svc-cta { padding: var(--s-6) var(--s-5); }
+  .svc-cta .btn { flex: 1 1 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-card:hover { transform: none; }
+  .svc-card:hover .svc-duo { opacity: 0.4; }
+  .svc-card:hover .svc-media img { filter: grayscale(1) contrast(1.18) brightness(0.68); transform: none; }
+  .svc-edge { transition: none !important; }
+}
