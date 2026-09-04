@@ -33,7 +33,7 @@ export function useInView({
     const tall = target.offsetHeight > window.innerHeight * 0.9
     const io = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting) { setInView(true); if (once) io.unobserve(target) }
+        if (e.isIntersecting) { setInView(true); if (once) { io.unobserve(target); stopNet() } }
         else if (!once) setInView(false)
       },
       tall
@@ -41,7 +41,40 @@ export function useInView({
         : { threshold, rootMargin }
     )
     io.observe(target)
-    return () => io.disconnect()
+
+    /* Safety net. A fast programmatic scroll — the screenshot harness, a jump
+       to an anchor, a flung touch scroll — can leave an IntersectionObserver
+       notification undelivered, and the element then stays at opacity 0 for
+       the rest of the session. Verified empirically: roughly one section in
+       ten was stranded per full-page scroll pass. The observer stays primary;
+       this only re-checks the SAME trigger point (top edge 12% into the
+       viewport, matching the rootMargin above) and anything already scrolled
+       past. It never fires at first pixel. */
+    let raf = null
+    let netOn = true
+    const stopNet = () => {
+      if (!netOn) return
+      netOn = false
+      window.removeEventListener('scroll', onNet)
+      window.removeEventListener('resize', onNet)
+      if (raf) cancelAnimationFrame(raf)
+    }
+    function check() {
+      raf = null
+      if (!netOn) return
+      const r = target.getBoundingClientRect()
+      const vh = window.innerHeight || 0
+      const line = tall ? vh * 0.75 : vh * 0.88
+      if (r.bottom <= 0 || (r.top < line && r.bottom > 0)) {
+        setInView(true)
+        if (once) { io.unobserve(target); stopNet() }
+      }
+    }
+    function onNet() { if (raf === null) raf = requestAnimationFrame(check) }
+    window.addEventListener('scroll', onNet, { passive: true })
+    window.addEventListener('resize', onNet, { passive: true })
+
+    return () => { io.disconnect(); stopNet() }
   }, [threshold, rootMargin, once, observeParent])
   return [ref, inView]
 }
